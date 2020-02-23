@@ -1,0 +1,19 @@
+{
+    "authorization": {
+        "consumer key": "YOUR_CONSUMER_KEY",
+        "consumer secret": "YOUR_CONSUMER_SECRET",
+        "token key": "YOUR_TOKEN_KEY",
+        "token secret": "YOUR_TOKEN_SECRET"
+    },
+    "keywords": [
+        "suspicious",
+        "weird",
+        "strange",
+        "odd",
+        "unusual",
+        "creepy"
+    ],
+    "redact_word_ratio": 0.3,
+    "redact_noun_ratio": 0.7,
+    "jiggle_rate": 0.2
+}
