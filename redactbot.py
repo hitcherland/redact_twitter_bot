@@ -88,6 +88,18 @@ def jiggle_words(text, jiggle_rate=0.5):
 
     return text
 
+def cutdown_words(text):
+    """The redacted character is a double character, so we need to remove some doubles"""
+    def blen(string):
+        return len(string.encode('utf8'))
+
+    while blen(text) >= 280:
+        indexes = [m.start(0) for m in re.finditer('\u2588{2,}', text)]
+        index = random.choice(indexes)
+        text = text[:index] + text[index + 1:]
+    return text
+
+
 def get_random_tweet(auth, potential_search_terms):
     """Get a random tweet that contains on of the potential search terms"""
     url = 'https://api.twitter.com/1.1/search/tweets.json'
@@ -149,7 +161,10 @@ def main(keywords=None, authorization=None, redact_word_ratio=0.3,
     jiggled_text = jiggle_words(redacted_text, jiggle_rate)
     LOG.info("jiggled: %s", jiggled_text)
 
-    resp = send_tweet(auth, jiggled_text)
+    cutdown_text = cutdown_words(jiggled_text)
+    LOG.info("cutdown: %s", jiggled_text)
+
+    resp = send_tweet(auth, cutdown_text)
     if 'errors' in resp:
         LOG.error('Failed to update status: %s', resp['errors'])
     else:
