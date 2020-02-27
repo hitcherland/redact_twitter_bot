@@ -96,7 +96,7 @@ def get_random_tweet(auth, potential_search_terms):
     retries = 0
     while retries < RETRY_LIMIT:
         resp = requests.get(url, auth=auth, params={
-            'q': random.choice(potential_search_terms),
+            'q': random.choice(potential_search_terms) + " -filter:retweets",
             'result_type': 'recent',
             'tweet_mode': 'extended',
         })
